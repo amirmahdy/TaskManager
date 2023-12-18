@@ -1,0 +1,92 @@
+definitions:
+  api.createUserRequest:
+    properties:
+      email:
+        type: string
+      full_name:
+        minLength: 1
+        type: string
+      password:
+        minLength: 6
+        type: string
+      username:
+        type: string
+    required:
+    - email
+    - full_name
+    - password
+    - username
+    type: object
+  api.createUserResponse:
+    properties:
+      email:
+        type: string
+      full_name:
+        type: string
+      username:
+        type: string
+    type: object
+  api.loginUserRequest:
+    properties:
+      password:
+        minLength: 6
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  api.loginUserResponse:
+    properties:
+      access_token:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /user/create:
+    post:
+      consumes:
+      - application/json
+      description: user create
+      parameters:
+      - description: Create User Request
+        in: body
+        name: createUserRequest
+        required: true
+        schema:
+          $ref: '#/definitions/api.createUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.createUserResponse'
+      summary: User
+      tags:
+      - User
+  /user/login:
+    post:
+      consumes:
+      - application/json
+      description: user login
+      parameters:
+      - description: Login User Request
+        in: body
+        name: loginUserRequest
+        required: true
+        schema:
+          $ref: '#/definitions/api.loginUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.loginUserResponse'
+      summary: User
+      tags:
+      - User
+swagger: "2.0"
