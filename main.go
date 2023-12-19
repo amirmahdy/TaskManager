@@ -11,6 +11,10 @@ import (
 	_ "github.com/lib/pq"
 )
 
+// @securityDefinitions.apikey	BearerAuth
+// @name						Authorization
+// @in							header
+// @tokenurl					http://127.0.0.1:8080/api/user/login
 func main() {
 	cfg, err := utils.LoadConfig(".")
 	if err != nil {

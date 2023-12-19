@@ -13,16 +13,16 @@ type Task struct {
 	Username    string         `json:"username"`
 	Title       sql.NullString `json:"title"`
 	Description sql.NullString `json:"description"`
-	DueDate     interface{}    `json:"due_date"`
+	DueDate     sql.NullTime   `json:"due_date"`
 	Priority    sql.NullInt32  `json:"priority"`
-	CreatedAt   interface{}    `json:"created_at"`
+	CreatedAt   sql.NullTime   `json:"created_at"`
 }
 
 type User struct {
-	Username          string      `json:"username"`
-	FullName          string      `json:"full_name"`
-	HashedPassword    string      `json:"hashed_password"`
-	Email             string      `json:"email"`
-	PasswordChangedAt interface{} `json:"password_changed_at"`
-	CreatedAt         interface{} `json:"created_at"`
+	Username          string       `json:"username"`
+	FullName          string       `json:"full_name"`
+	HashedPassword    string       `json:"hashed_password"`
+	Email             string       `json:"email"`
+	PasswordChangedAt sql.NullTime `json:"password_changed_at"`
+	CreatedAt         sql.NullTime `json:"created_at"`
 }

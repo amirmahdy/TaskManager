@@ -1,4 +1,37 @@
 definitions:
+  api.Task:
+    properties:
+      created_at:
+        type: string
+      description:
+        type: string
+      due_date:
+        type: string
+      id:
+        type: integer
+      priority:
+        type: integer
+      title:
+        type: string
+      username:
+        type: string
+    type: object
+  api.createTaskRequest:
+    properties:
+      description:
+        type: string
+      due_date:
+        type: string
+      priority:
+        type: integer
+      title:
+        type: string
+    required:
+    - description
+    - due_date
+    - priority
+    - title
+    type: object
   api.createUserRequest:
     properties:
       email:
@@ -45,6 +78,46 @@ definitions:
 info:
   contact: {}
 paths:
+  /task:
+    get:
+      consumes:
+      - application/json
+      description: get task
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Task'
+      security:
+      - BearerAuth: []
+      summary: Task
+      tags:
+      - Task
+    post:
+      consumes:
+      - application/json
+      description: task create
+      parameters:
+      - description: Create Task Request
+        in: body
+        name: createTaskRequest
+        required: true
+        schema:
+          $ref: '#/definitions/api.createTaskRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Task'
+      security:
+      - BearerAuth: []
+      summary: Task
+      tags:
+      - Task
   /user/create:
     post:
       consumes:
@@ -89,4 +162,9 @@ paths:
       summary: User
       tags:
       - User
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"

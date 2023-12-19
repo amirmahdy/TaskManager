@@ -24,8 +24,14 @@ func New(db DBTX) *Queries {
 func Prepare(ctx context.Context, db DBTX) (*Queries, error) {
 	q := Queries{db: db}
 	var err error
+	if q.createTaskStmt, err = db.PrepareContext(ctx, createTask); err != nil {
+		return nil, fmt.Errorf("error preparing query CreateTask: %w", err)
+	}
 	if q.createUserStmt, err = db.PrepareContext(ctx, createUser); err != nil {
 		return nil, fmt.Errorf("error preparing query CreateUser: %w", err)
+	}
+	if q.getTasksStmt, err = db.PrepareContext(ctx, getTasks); err != nil {
+		return nil, fmt.Errorf("error preparing query GetTasks: %w", err)
 	}
 	if q.getUserStmt, err = db.PrepareContext(ctx, getUser); err != nil {
 		return nil, fmt.Errorf("error preparing query GetUser: %w", err)
@@ -35,9 +41,19 @@ func Prepare(ctx context.Context, db DBTX) (*Queries, error) {
 
 func (q *Queries) Close() error {
 	var err error
+	if q.createTaskStmt != nil {
+		if cerr := q.createTaskStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing createTaskStmt: %w", cerr)
+		}
+	}
 	if q.createUserStmt != nil {
 		if cerr := q.createUserStmt.Close(); cerr != nil {
 			err = fmt.Errorf("error closing createUserStmt: %w", cerr)
+		}
+	}
+	if q.getTasksStmt != nil {
+		if cerr := q.getTasksStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing getTasksStmt: %w", cerr)
 		}
 	}
 	if q.getUserStmt != nil {
@@ -84,7 +100,9 @@ func (q *Queries) queryRow(ctx context.Context, stmt *sql.Stmt, query string, ar
 type Queries struct {
 	db             DBTX
 	tx             *sql.Tx
+	createTaskStmt *sql.Stmt
 	createUserStmt *sql.Stmt
+	getTasksStmt   *sql.Stmt
 	getUserStmt    *sql.Stmt
 }
 
@@ -92,7 +110,9 @@ func (q *Queries) WithTx(tx *sql.Tx) *Queries {
 	return &Queries{
 		db:             tx,
 		tx:             tx,
+		createTaskStmt: q.createTaskStmt,
 		createUserStmt: q.createUserStmt,
+		getTasksStmt:   q.getTasksStmt,
 		getUserStmt:    q.getUserStmt,
 	}
 }

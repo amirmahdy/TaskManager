@@ -31,6 +31,10 @@ func NewServer(config utils.Config, store db.Store, token token.Maker) (*Server,
 	router.POST("/api/user/login", server.loginUser)
 	router.POST("/api/user/create", server.createUser)
 
+	authRoutes := router.Group("/").Use(authMiddleware(server.token))
+	authRoutes.GET("/api/task", server.getTask)
+	authRoutes.POST("/api/task", server.createTask)
+
 	server.router = router
 	return server, nil
 }
