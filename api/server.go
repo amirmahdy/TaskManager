@@ -1,6 +1,7 @@
 package api
 
 import (
+	"log"
 	db "taskmanager/db/model"
 	"taskmanager/docs"
 	"taskmanager/token"
@@ -18,7 +19,11 @@ type Server struct {
 	router *gin.Engine
 }
 
-func NewServer(config utils.Config, store db.Store, token token.Maker) (*Server, error) {
+func NewServer(config utils.Config, store db.Store) (*Server, error) {
+	token, err := token.NewJWTMaker(config.TokenSymmetricKey)
+	if err != nil {
+		log.Fatal("cannot create token maker", err)
+	}
 	server := &Server{
 		config: config,
 		store:  store,

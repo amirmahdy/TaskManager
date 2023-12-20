@@ -24,5 +24,9 @@ sqlc:
 	@sqlc -f db/sqlc.yaml generate
 	@echo "sqlc generated successfully"
 
+mock:
+	@echo "Generating mock..."
+	@mockgen --package dbmock --destination db/mock/store.go taskmanager/db/model Store
+	@echo "mock generated successfully"
 
-.PHONY: new_migration migrate_up migrate_down
+.PHONY: new_migration migrate_up migrate_down sqlc mock
