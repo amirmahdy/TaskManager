@@ -29,4 +29,20 @@ mock:
 	@mockgen --package dbmock --destination db/mock/store.go taskmanager/db/model Store
 	@echo "mock generated successfully"
 
-.PHONY: new_migration migrate_up migrate_down sqlc mock
+build:
+	@echo "Building server..."
+	@docker-compose -p taskmanager -f docker/docker-compose.yaml build
+	@echo "Server built successfully"
+
+start:
+	@echo "Starting server..."
+	@docker-compose -p taskmanager -f docker/docker-compose.yaml up -d
+	@echo "Server started successfully"
+
+stop:
+	@echo "Stopping server..."
+	@docker-compose -p taskmanager -f docker/docker-compose.yaml down
+	@echo "Server stopped successfully"
+	
+
+.PHONY: new_migration migrate_up migrate_down sqlc mock build start stop
