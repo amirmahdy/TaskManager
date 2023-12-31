@@ -15,11 +15,12 @@ You need to have Docker installed on your machine. Then you would need to instal
 1. Build images
 ```bash
 sudo make build
-
+```
 2. Run app and DB
 ```bash
 sudo make start
-
-You can stop the application by:
 ```
+You can stop the application by:
+```bash
 sudo make down
+```
