@@ -31,18 +31,22 @@ mock:
 
 build:
 	@echo "Building server..."
-	@docker-compose -p taskmanager -f docker/docker-compose.yaml build
+	@docker-compose -p taskmanager -f docker/docker-compose.yml build
 	@echo "Server built successfully"
 
 start:
 	@echo "Starting server..."
-	@docker-compose -p taskmanager -f docker/docker-compose.yaml up -d
+	@docker-compose -p taskmanager -f docker/docker-compose.yml up -d
 	@echo "Server started successfully"
 
 stop:
 	@echo "Stopping server..."
-	@docker-compose -p taskmanager -f docker/docker-compose.yaml down
+	@docker-compose -p taskmanager -f docker/docker-compose.yml down
 	@echo "Server stopped successfully"
 	
+test: 
+	@echo "Running tests..."
+	@go test -v -cover ./...
+	@echo "Tests ran successfully"
 
-.PHONY: new_migration migrate_up migrate_down sqlc mock build start stop
+.PHONY: new_migration migrate_up migrate_down sqlc mock build start stop test

@@ -6,6 +6,10 @@ services:
     ports: [ '127.0.0.1:5432:5432' ]
     volumes:
       - ./postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=taskmanager
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=secret
     env_file:
       - ../app.env
 
@@ -14,6 +18,8 @@ services:
       context: ../
       dockerfile: ./docker/app/Dockerfile
     container_name: app
+    environment:
+      - DB_CONN=postgres://root:secret@psql:5432/taskmanager?sslmode=disable
     ports:
       - 8080:8080    
     entrypoint: 
