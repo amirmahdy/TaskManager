@@ -3,6 +3,7 @@ package db
 import (
 	"context"
 	"database/sql"
+	"taskmanager/utils"
 	"testing"
 	"time"
 
@@ -15,7 +16,7 @@ func TestCreateTask(t *testing.T) {
 	require.NoError(t, err)
 
 	params := CreateTaskParams{
-		Username:    "testuser",
+		Username:    utils.CreateRandomName(),
 		Title:       sql.NullString{String: "Test Task", Valid: true},
 		Description: sql.NullString{String: "This is a test task", Valid: true},
 		DueDate:     sql.NullTime{Time: due, Valid: true},
