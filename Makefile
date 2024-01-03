@@ -46,7 +46,7 @@ stop:
 	
 test: 
 	@echo "Running tests..."
-	@go test -v -cover ./...
+	@go test -cover ./...
 	@echo "Tests ran successfully"
 
 .PHONY: new_migration migrate_up migrate_down sqlc mock build start stop test

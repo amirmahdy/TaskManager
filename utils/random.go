@@ -2,12 +2,16 @@ package utils
 
 import (
 	"math/rand"
+	"time"
 )
 
 const (
 	letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 )
 
+func init() {
+	rand.New(rand.NewSource(time.Now().Unix()))
+}
 func CreateRandomString(n int) string {
 	ln := len(letterBytes)
 	tmp := []byte{}
