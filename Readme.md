@@ -22,5 +22,12 @@ sudo make start
 ```
 You can stop the application by:
 ```bash
-sudo make down
+sudo make stop
+```
+
+### Test
+
+To run tests you can manually run following command.
+```bash
+sudo make test
 ```
