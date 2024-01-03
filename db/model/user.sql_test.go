@@ -8,14 +8,14 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestCreateAndGetUser(t *testing.T) {
-	username := utils.CreateRandomName()
+func createFakeDBUser() (username string, params CreateUserParams, err error) {
+	username = utils.CreateRandomName()
 	email := utils.CreateRandomEmail()
 	fullName := utils.CreateRandomName()
 	password := utils.CreateRandomString(8)
 	hash, _ := utils.CreateHashPassword(password)
 
-	params := CreateUserParams{
+	params = CreateUserParams{
 		Username:       username,
 		FullName:       fullName,
 		Email:          email,
@@ -23,7 +23,12 @@ func TestCreateAndGetUser(t *testing.T) {
 	}
 
 	// Call the create user function
-	_, err := testStore.CreateUser(context.Background(), params)
+	_, err = testStore.CreateUser(context.Background(), params)
+	return
+}
+
+func TestCreateAndGetUser(t *testing.T) {
+	username, params, err := createFakeDBUser()
 	require.NoError(t, err)
 
 	// Call the get user function
