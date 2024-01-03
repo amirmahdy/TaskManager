@@ -24,7 +24,7 @@ func randomTask(user string) db.Task {
 	dDate, _ := time.Parse("2006-01-02T15:04:05", "2021-01-01T15:04:05")
 	dueDate := sql.NullTime{Time: dDate, Valid: true}
 	curDate := sql.NullTime{Time: time.Now(), Valid: true}
-	priority := sql.NullInt32{Int32: int32(utils.CreateRandomInt(2)), Valid: true}
+	priority := sql.NullInt32{Int32: int32(utils.CreateRandomInt(2) + 1), Valid: true}
 
 	return db.Task{
 		ID:          int64(utils.CreateRandomInt(10)),
